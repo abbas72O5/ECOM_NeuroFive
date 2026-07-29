@@ -7,7 +7,7 @@ import { TrendingUp, Eye, MousePointerClick, Star } from 'lucide-react';
 
 const COLORS = ['#6366f1', '#ec4899', '#10b981', '#f59e0b', '#ef4444'];
 
-const SellerDashboard = () => {
+const SellerDashboard = ({ authUser }) => {
   const [data, setData] = useState(null);
   const [filter, setFilter] = useState('last7days');
   const [loading, setLoading] = useState(true);
@@ -18,7 +18,7 @@ const SellerDashboard = () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch(`http://localhost:5000/api/seller/stats?range=${filter}`);
+        const response = await fetch(`http://localhost:5000/api/seller/stats?range=${filter}&sellerId=${authUser?.sellerId}`);
         if (!response.ok) throw new Error('Network response was not ok');
         const result = await response.json();
         setData(result);
@@ -53,7 +53,7 @@ const SellerDashboard = () => {
       <div className="flex justify-between items-center" style={{ marginBottom: '2rem' }}>
         <div>
           <h1>Seller Dashboard</h1>
-          <p>Overview of your store's performance.</p>
+          <p>Welcome, {authUser?.name}. Here is the overview of your store's performance.</p>
         </div>
         <select 
           className="select-filter" 

@@ -7,7 +7,7 @@ const mockProducts = [
   { id: 4, name: 'Mechanical Keyboard', price: '$129.99', category: 'Electronics' },
 ];
 
-const UserPortal = () => {
+const UserPortal = ({ authUser }) => {
   const [cartItems, setCartItems] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const cartCount = cartItems.length;
@@ -21,7 +21,7 @@ const UserPortal = () => {
     <div>
       <div className="flex justify-between items-center" style={{ marginBottom: '2rem' }}>
         <div>
-          <h1>Featured Products</h1>
+          <h1>Welcome, {authUser?.name || 'Guest'}</h1>
           <p>Discover our curated collection of premium items.</p>
         </div>
         <button className="btn-primary" onClick={() => setIsCartOpen(true)}>View Cart ({cartCount})</button>
