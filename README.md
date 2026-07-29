@@ -47,7 +47,33 @@ npm run dev
 
 The frontend application will start on your local Vite development server (usually `http://localhost:5173`). Open the provided local URL in your browser to view the app!
 
+## Testing
+
+The application includes a comprehensive test suite covering the frontend, backend, and End-to-End user flows.
+
+### Frontend Tests (Vitest & React Testing Library)
+To run the frontend component and interaction tests:
+```bash
+cd frontend
+npm run test
+```
+
+### Backend Tests (Jest & Supertest)
+To run the backend API tests:
+```bash
+cd backend
+npm run test
+```
+
+### End-to-End Tests (Cypress)
+To run the E2E user flow simulation, make sure both your frontend (`npm run dev`) and backend (`node server.js`) are running first. Then, in a new terminal at the project root, run:
+```bash
+npm run cypress:open
+```
+*Note: You may need to add `"cypress:open": "cypress open"` to the root package.json if it isn't there, or simply use `npx cypress open` or `npx cypress run`.*
+
 ## Tech Stack
 
-- **Frontend**: React, React Router DOM, Recharts, Lucide React, Vanilla CSS, Vite.
-- **Backend**: Node.js, Express, CORS.
+- **Frontend**: React, React Router DOM, Recharts, Lucide React, Vanilla CSS, Vite, Vitest.
+- **Backend**: Node.js, Express, CORS, Jest, Supertest.
+- **E2E**: Cypress.
