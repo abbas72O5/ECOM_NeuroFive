@@ -49,28 +49,45 @@ The frontend application will start on your local Vite development server (usual
 
 ## Testing
 
-The application includes a comprehensive test suite covering the frontend, backend, and End-to-End user flows.
+This project includes a comprehensive, multi-layered testing suite to ensure high reliability across all components.
 
-### Frontend Tests (Vitest & React Testing Library)
-To run the frontend component and interaction tests:
-```bash
-cd frontend
-npm run test
-```
+### 1. Frontend Tests (Vitest & React Testing Library)
+The frontend relies on **Vitest** for its fast execution and **React Testing Library** for component rendering. These tests simulate a browser environment using `jsdom`.
+- **What it tests**: 
+  - Component rendering (e.g., verifying the Navigation and Login forms load correctly).
+  - User interactions (e.g., typing into inputs and clicking buttons).
+  - State changes (e.g., showing a "Logging in..." state upon form submission).
+- **How to run**:
+  ```bash
+  cd frontend
+  npm run test
+  ```
 
-### Backend Tests (Jest & Supertest)
-To run the backend API tests:
-```bash
-cd backend
-npm run test
-```
+### 2. Backend Tests (Jest & Supertest)
+The backend uses **Jest** as the test runner and **Supertest** to execute mock HTTP requests against the Express API.
+- **What it tests**: 
+  - Validates all core API endpoints (`/api/products`, `/api/login`, `/api/checkout`, `/api/seller/stats`).
+  - **Happy paths**: Ensuring a 200 OK response and correct data structures for valid requests.
+  - **Failure cases**: Ensuring 400/401 errors are properly thrown for missing IDs or invalid credentials.
+- **How to run**:
+  ```bash
+  cd backend
+  npm run test
+  ```
 
-### End-to-End Tests (Cypress)
-To run the E2E user flow simulation, make sure both your frontend (`npm run dev`) and backend (`node server.js`) are running first. Then, in a new terminal at the project root, run:
-```bash
-npm run cypress:open
-```
-*Note: You may need to add `"cypress:open": "cypress open"` to the root package.json if it isn't there, or simply use `npx cypress open` or `npx cypress run`.*
+### 3. End-to-End Tests (Cypress)
+For full integration testing, **Cypress** simulates a real user driving the web app.
+- **What it tests**: 
+  - The complete user checkout flow (`user_flow.cy.js`).
+  - It logs in as a shopper, verifies the dashboard loads, adds items to the cart, opens the modal, and clicks the checkout button, validating alerts along the way.
+- **How to run**:
+  > **Note:** Your backend (`node server.js`) and frontend (`npm run dev`) must be running before starting Cypress!
+  
+  In a new terminal at the project root, run:
+  ```bash
+  npx cypress open
+  ```
+  *(Select "E2E Testing", choose your browser, and click the test file to run it).*
 
 ## Tech Stack
 
