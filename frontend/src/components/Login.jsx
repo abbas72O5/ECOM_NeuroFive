@@ -46,18 +46,15 @@ const Login = ({ setAuthUser }) => {
         <form onSubmit={handleLogin}>
           <div style={{ marginBottom: '1rem' }}>
             <label style={{ display: 'block', marginBottom: '0.5rem', color: '#94a3b8' }}>Username</label>
-            <select 
+            <input 
+              type="text"
               value={username} 
               onChange={(e) => setUsername(e.target.value)}
               className="select-filter"
-              style={{ width: '100%', marginBottom: '1rem' }}
+              style={{ width: '100%', marginBottom: '1rem', padding: '0.5rem', borderRadius: '4px', border: '1px solid #333', backgroundColor: '#1a1a1a', color: 'white' }}
+              placeholder="Enter 'user', 'seller1', or 'seller2'"
               required
-            >
-              <option value="" disabled>Select a user to login</option>
-              <option value="user">Shopper (User)</option>
-              <option value="seller1">Acme Electronics (Seller 1)</option>
-              <option value="seller2">Globex Clothing (Seller 2)</option>
-            </select>
+            />
           </div>
           <button 
             type="submit" 

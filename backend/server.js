@@ -69,6 +69,13 @@ const dataStore = {
   }
 };
 
+const products = [
+  { id: 1, name: 'Premium Wireless Headphones', price: 299.99, category: 'Electronics', sellerId: 'seller1' },
+  { id: 2, name: 'Ergonomic Desk Chair', price: 199.50, category: 'Home', sellerId: 'seller2' },
+  { id: 3, name: 'Minimalist Watch', price: 149.00, category: 'Accessories', sellerId: 'seller2' },
+  { id: 4, name: 'Mechanical Keyboard', price: 129.99, category: 'Electronics', sellerId: 'seller1' },
+];
+
 const filterData = (range, sellerId) => {
   const sellerData = dataStore[sellerId];
   if (!sellerData) return null;
@@ -136,6 +143,37 @@ app.get('/api/seller/stats', (req, res) => {
   setTimeout(() => {
     res.json(stats);
   }, 500); // Simulate network delay
+});
+
+app.get('/api/products', (req, res) => {
+  res.json(products);
+});
+
+app.post('/api/checkout', (req, res) => {
+  const { cartItems } = req.body;
+  if (!cartItems || !Array.isArray(cartItems)) {
+    return res.status(400).json({ error: 'cartItems array is required' });
+  }
+
+  const salesBySeller = {};
+  cartItems.forEach(item => {
+    if (item.sellerId) {
+      if (!salesBySeller[item.sellerId]) salesBySeller[item.sellerId] = 0;
+      salesBySeller[item.sellerId] += item.price;
+    }
+  });
+
+  for (const sellerId in salesBySeller) {
+    if (dataStore[sellerId]) {
+      const salesAmount = Math.round(salesBySeller[sellerId]);
+      dataStore[sellerId].totals.sales += salesAmount;
+      
+      // Update the first day (Monday) in the chart so they see a visual difference
+      dataStore[sellerId].salesOverTime[0].sales += salesAmount;
+    }
+  }
+
+  res.json({ success: true, message: 'Checkout complete' });
 });
 
 const PORT = 5000;
