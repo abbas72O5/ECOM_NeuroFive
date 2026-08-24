@@ -94,3 +94,30 @@ For full integration testing, **Cypress** simulates a real user driving the web 
 - **Frontend**: React, React Router DOM, Recharts, Lucide React, Vanilla CSS, Vite, Vitest.
 - **Backend**: Node.js, Express, CORS, Jest, Supertest.
 - **E2E**: Cypress.
+
+## Deployment Guide
+
+### 1. Deploying the Backend (e.g., Render, Heroku)
+
+1. Push your code to GitHub.
+2. Create a new Web Service on your hosting provider (e.g., Render) and connect your repository.
+3. Set the **Root Directory** to `backend`.
+4. Set the **Build Command** to `npm install`.
+5. Set the **Start Command** to `node server.js`.
+6. Once deployed, note the live URL of your backend (e.g., `https://your-backend.onrender.com`).
+
+### 2. Deploying the Frontend (e.g., Vercel, Netlify)
+
+1. Connect your repository to Vercel or Netlify.
+2. Set the **Root Directory** to `frontend`.
+3. Set the **Framework Preset** to Vite (if not auto-detected).
+4. Add the following **Environment Variable**:
+   - `VITE_API_URL` = `[YOUR_LIVE_BACKEND_URL]` (e.g., `https://your-backend.onrender.com`)
+5. Deploy!
+
+### 3. Verification & Video
+
+Once both are live:
+1. Open the frontend on Desktop and Mobile to verify responsiveness.
+2. Run a Lighthouse audit via Chrome DevTools and screenshot the scores.
+3. Record a video walkthrough demonstrating the application, and post it to LinkedIn!

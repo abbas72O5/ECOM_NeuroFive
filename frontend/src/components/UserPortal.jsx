@@ -7,7 +7,8 @@ const UserPortal = ({ authUser }) => {
   const [checkingOut, setCheckingOut] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/products')
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    fetch(`${API_URL}/api/products`)
       .then(res => res.json())
       .then(data => setProducts(data))
       .catch(err => console.error("Failed to load products", err));
@@ -25,7 +26,8 @@ const UserPortal = ({ authUser }) => {
     if (cartItems.length === 0) return;
     setCheckingOut(true);
     try {
-      const response = await fetch('http://localhost:5000/api/checkout', {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const response = await fetch(`${API_URL}/api/checkout`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ cartItems })
@@ -57,7 +59,11 @@ const UserPortal = ({ authUser }) => {
       <div className="grid grid-cols-4">
         {products.map((product) => (
           <div key={product.id} className="glass-panel product-card">
-            <div className="product-img"></div>
+            <img 
+              className="product-img" 
+              src={`https://placehold.co/400x300/1e293b/f8fafc?text=${encodeURIComponent(product.name)}`} 
+              alt={`Image of ${product.name}, category: ${product.category}`} 
+            />
             <h3>{product.name}</h3>
             <p style={{ fontSize: '0.875rem', color: '#94a3b8', marginBottom: '0.5rem' }}>
               {product.category} (Sold by {product.sellerId === 'seller1' ? 'Acme Electronics' : 'Globex Clothing'})
